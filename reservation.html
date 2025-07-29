@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Réservation - Salon Élégance</title>
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
   <header>
@@ -19,11 +20,31 @@
     <h2>Planning disponible</h2>
     <p>Choisissez votre créneau via notre agenda Google :</p>
 
-    <iframe src="https://calendar.google.com/calendar/embed?src=YOUR_CALENDAR_ID&ctz=Europe%2FParis" 
+    <iframe src="https://calendar.google.com/calendar/embed?src=2b169fe8c65fac33161c5bc296cb32e924cffc6447a680270ebf4881328f01d3@group.calendar.google.com&ctz=Europe%2FParis" 
             style="border: 0" width="800" height="600" frameborder="0" scrolling="no">
     </iframe>
 
-    <p><a href="https://calendar.google.com/calendar/u/0/r/eventedit" target="_blank">Réserver un créneau</a></p>
+    <h2>Formulaire de réservation</h2>
+    <form id="reservation-form">
+      <label for="nom">Nom :</label><br>
+      <input type="text" id="nom" name="nom" required><br><br>
+
+      <label for="prenom">Prénom :</label><br>
+      <input type="text" id="prenom" name="prenom" required><br><br>
+
+      <label for="date">Date souhaitée :</label><br>
+      <select id="date" name="date" required>
+        <option value="">-- Sélectionnez une date --</option>
+        <option value="2025-08-01">1 août 2025</option>
+        <option value="2025-08-02">2 août 2025</option>
+        <option value="2025-08-03">3 août 2025</option>
+      </select><br><br>
+
+      <label for="description">Que souhaitez-vous faire ?</label><br>
+      <textarea id="description" name="description" placeholder="Ex : Coupe, brushing, couleur..." onfocus="clearPlaceholder(this)"></textarea><br><br>
+
+      <button type="submit">Réserver</button>
+    </form>
   </main>
 
   <footer>
