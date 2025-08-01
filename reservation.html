@@ -25,27 +25,45 @@
             style="border: 0" width="800" height="600" frameborder="0" scrolling="no">
     </iframe>
 
-    <h2>Formulaire de réservation</h2>
-    <form id="reservation-form">
-      <label for="nom">Nom :</label><br>
-      <input type="text" id="nom" name="nom" required><br><br>
+    <h2>Réserver un créneau</h2>
+<form id="reservation-form">
+  <label>Nom :</label><br>
+  <input type="text" name="nom" required><br><br>
 
-      <label for="prenom">Prénom :</label><br>
-      <input type="text" id="prenom" name="prenom" required><br><br>
+  <label>Prénom :</label><br>
+  <input type="text" name="prenom" required><br><br>
 
-      <label for="date">Date souhaitée :</label><br>
-      <select id="date" name="date" required>
-        <option value="">-- Sélectionnez une date --</option>
-        <option value="2025-08-01">1 août 2025</option>
-        <option value="2025-08-02">2 août 2025</option>
-        <option value="2025-08-03">3 août 2025</option>
-      </select><br><br>
+  <label>Date :</label><br>
+  <input type="date" name="date" required><br><br>
 
-      <label for="description">Que souhaitez-vous faire ?</label><br>
-      <textarea id="description" name="description" placeholder="Ex : Coupe, brushing, couleur..." onfocus="clearPlaceholder(this)"></textarea><br><br>
+  <label>Heure :</label><br>
+  <input type="time" name="heure" required><br><br>
 
-      <button type="submit">Réserver</button>
-    </form>
+  <label>Que souhaitez-vous faire ?</label><br>
+  <textarea name="description" placeholder="Ex: Coupe, brushing..." onfocus="this.placeholder=''"></textarea><br><br>
+
+  <button type="submit">Réserver</button>
+</form>
+
+<p id="confirmation"></p>
+
+<script>
+  document.getElementById("reservation-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    fetch("https://script.google.com/macros/s/AKfycbxnFDaKOpEs2bx9XeqUW-jHHd33Kv-E5HlJi4xyYWYByiUQccCH0qS1uunc9SD7g9WQ/exec", {
+      method: "POST",
+      body: formData
+    })
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById("confirmation").innerText = "✅ Réservation enregistrée !";
+    })
+    .catch(err => {
+      document.getElementById("confirmation").innerText = "❌ Une erreur est survenue.";
+    });
+  });
+</script>
   </main>
 
   <footer>
