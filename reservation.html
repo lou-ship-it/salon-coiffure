@@ -1,73 +1,53 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Réservation - Salon Élégance</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <title>Réservation</title>
 </head>
 <body>
-  <header>
-    <h1>Réservez votre rendez-vous</h1>
-    <nav>
-      <a href="accueil.html">Accueil</a>
-      <a href="reservation.html">Réservation</a>
-      <a href="avis.html">Avis</a>
-    </nav>
-  </header>
+  <h1>Planning de réservation</h1>
+  <iframe src="https://calendar.google.com/calendar/embed?src=2b169fe8c65fac33161c5bc296cb32e924cffc6447a680270ebf4881328f01d3%40group.calendar.google.com&ctz=Europe%2FParis&mode=WEEK&showTitle=0&showDate=1&showPrint=0&showTabs=0&showCalendars=0&showTz=0&bgcolor=%23ffffff"
+    style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
 
-  <main>
-    <h2>Planning hebdomadaire</h2>
-    <p>Les créneaux <strong>verts</strong> sont disponibles, les créneaux <strong>rouges</strong> sont déjà réservés.<br>
-       Les informations personnelles ne sont pas affichées.</p>
+  <h2>Réserver un créneau</h2>
+  <form id="reservation-form">
+    <label>Nom :</label><br>
+    <input type="text" name="nom" required><br><br>
 
-    <iframe src="https://calendar.google.com/calendar/embed?src=2b169fe8c65fac33161c5bc296cb32e924cffc6447a680270ebf4881328f01d3@group.calendar.google.com&ctz=Europe%2FParis&mode=WEEK&showPrint=0&showTitle=0&showTabs=0&showTz=0&showCalendars=0&bgcolor=%23FFFFFF" 
-            style="border: 0" width="800" height="600" frameborder="0" scrolling="no">
-    </iframe>
+    <label>Prénom :</label><br>
+    <input type="text" name="prenom" required><br><br>
 
-    <h2>Réserver un créneau</h2>
-<form id="reservation-form">
-  <label>Nom :</label><br>
-  <input type="text" name="nom" required><br><br>
+    <label>Date :</label><br>
+    <input type="date" name="date" required><br><br>
 
-  <label>Prénom :</label><br>
-  <input type="text" name="prenom" required><br><br>
+    <label>Heure :</label><br>
+    <input type="time" name="heure" required><br><br>
 
-  <label>Date :</label><br>
-  <input type="date" name="date" required><br><br>
+    <label>Que souhaitez-vous faire ?</label><br>
+    <textarea name="description" placeholder="Ex: Coupe, brushing..." onfocus="this.placeholder=''"></textarea><br><br>
 
-  <label>Heure :</label><br>
-  <input type="time" name="heure" required><br><br>
+    <button type="submit">Réserver</button>
+  </form>
 
-  <label>Que souhaitez-vous faire ?</label><br>
-  <textarea name="description" placeholder="Ex: Coupe, brushing..." onfocus="this.placeholder=''"></textarea><br><br>
+  <p id="confirmation"></p>
 
-  <button type="submit">Réserver</button>
-</form>
-
-<p id="confirmation"></p>
-
-<script>
-  document.getElementById("reservation-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    fetch("https://script.google.com/macros/s/AKfycbwTn61cu3VNmuGTubBXC45LYZ9ZsY81g2dA9OTO2rZaE1fbNH0tidRtB66p5b5kPiIt/exec", {
-      method: "POST",
-      body: formData
-    })
-    .then(res => res.text())
-    .then(data => {
-      document.getElementById("confirmation").innerText = "✅ Réservation enregistrée !";
-    })
-    .catch(err => {
-      document.getElementById("confirmation").innerText = "❌ Une erreur est survenue.";
+  <script>
+    document.getElementById("reservation-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      fetch("https://script.google.com/macros/s/AKfycbxnFDaKOpEs2bx9XeqUW-jHHd33Kv-E5HlJi4xyYWYByiUQccCH0qS1uunc9SD7g9WQ/exec", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("confirmation").innerText = data;
+      })
+      .catch(err => {
+        document.getElementById("confirmation").innerText = "❌ Une erreur est survenue.";
+      });
     });
-  });
-</script>
-  </main>
-
-  <footer>
-    <p>© 2025 Salon Élégance</p>
-  </footer>
+  </script>
 </body>
 </html>
