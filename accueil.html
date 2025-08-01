@@ -4,8 +4,22 @@
   <meta charset="UTF-8">
   <title>Salon Élégance - Présentation</title>
   <link rel="stylesheet" href="style.css">
+<button onclick="deconnexion()">Se déconnecter</button>
+
+<script>
+  function deconnexion() {
+    localStorage.removeItem("estConnecte");
+    window.location.href = "login.html";
+  }
+</script>
 </head>
 <body>
+<script>
+  // Vérifie si l'utilisateur est connecté
+  if (!localStorage.getItem("estConnecte")) {
+    window.location.href = "login.html"; // Redirige vers la page de connexion
+  }
+</script>
   <header>
     <h1>Salon de Coiffure Élégance</h1>
     <nav>

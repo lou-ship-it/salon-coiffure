@@ -6,6 +6,12 @@
   <title>Redirection...</title>
 </head>
 <body>
+<script>
+  // Vérifie si l'utilisateur est connecté
+  if (!localStorage.getItem("estConnecte")) {
+    window.location.href = "login.html"; // Redirige vers la page de connexion
+  }
+</script>
   <p>Redirection en cours vers la page d'accueil...</p>
 </body>
 </html>
