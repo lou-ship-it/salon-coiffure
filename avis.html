@@ -6,20 +6,21 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<button onclick="deconnexion()">Se déconnecter</button>
-<script>
-  function deconnexion() {
-    localStorage.removeItem("estConnecte");
-    window.location.href = "login.html";
-  }
-</script>
-<script>
-  // Vérifie si l'utilisateur est connecté
-  if (!localStorage.getItem("estConnecte")) {
-    window.location.href = "login.html"; // Redirige vers la page de connexion
-  }
-</script>
   <header>
+    <script>
+      // Vérifie si l'utilisateur est connecté
+      if (!localStorage.getItem("estConnecte")) {
+        window.location.href = "login.html"; // Redirige vers la page de connexion
+      }
+    </script>
+      <header>
+        <button class="logout-btn" onclick="deconnexion()">Se déconnecter</button>
+        <script>
+          function deconnexion() {
+            localStorage.removeItem("estConnecte");
+            window.location.href = "login.html";
+          }
+        </script>
     <h1>Les avis de nos clients</h1>
     <nav>
       <a href="accueil.html">Accueil</a>
@@ -27,7 +28,6 @@
       <a href="avis.html">Avis</a>
     </nav>
   </header>
-
   <main>
     <h2>Ce que pensent nos clients</h2>
 
