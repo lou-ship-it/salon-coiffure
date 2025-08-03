@@ -67,24 +67,31 @@
     <input type="password" id="mot_de_passe" placeholder="Mot de passe" required />
     <button type="submit">Se connecter</button>
     <p id="message"></p>
-
     <p class="inscription-text">Vous n'avez pas de compte ?</p>
     <a href="inscription.html"><button type="button" class="inscription-btn">S'inscrire</button></a>
   </form>
 
   <script>
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
     const form = document.getElementById("loginForm");
-    form.addEventListener("submit", function (e) {
+    form.addEventListener("submit", async function (e) {
       e.preventDefault();
 
       const email = document.getElementById("email").value.trim();
       const motDePasse = document.getElementById("mot_de_passe").value.trim();
+      const hashed = await sha256(motDePasse);
 
-      fetch("https://script.google.com/macros/s/AKfycbyxBZ5Ialk_WFZcaKUoRuuGEtloKJWpsLmWFz_6QbwF0-aZSp-AJmddm7-8OUag7onq/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbyo1WOmC7cpDBm8eVWxEDtgGLKHPFZ47oAEdUmnMfs2cAgNatJKSlU30i-voOGeST9u/exec", {
         method: "POST",
         body: new URLSearchParams({
           email: email,
-          mot_de_passe: motDePasse
+          mot_de_passe: hashed
         })
       })
       .then(response => response.text())
