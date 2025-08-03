@@ -4,16 +4,15 @@
   <meta charset="UTF-8">
   <title>Avis clients - Salon Élégance</title>
   <link rel="stylesheet" href="style.css">
+</head>
+<body>
 <button onclick="deconnexion()">Se déconnecter</button>
-
 <script>
   function deconnexion() {
     localStorage.removeItem("estConnecte");
     window.location.href = "login.html";
   }
 </script>
-</head>
-<body>
 <script>
   // Vérifie si l'utilisateur est connecté
   if (!localStorage.getItem("estConnecte")) {
