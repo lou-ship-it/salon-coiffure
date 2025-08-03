@@ -5,6 +5,12 @@
   <title>Salon Élégance - Présentation</title>
   <link rel="stylesheet" href="style.css">
 <button onclick="deconnexion()">Se déconnecter</button>
+<script>
+  function deconnexion() {
+    localStorage.removeItem("estConnecte");
+    window.location.href = "login.html";
+  }
+</script>
 </head>
 <body>
   <header>
