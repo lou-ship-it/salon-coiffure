@@ -29,3 +29,20 @@ body {
     text-align: center;
     padding: 10px;
   }
+  .logout-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: white;
+    color: #196bdf;
+    border: none;
+    padding: 8px 12px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  header {
+    position: relative; /* Pour que le bouton se positionne par rapport au header */
+  }
+  
