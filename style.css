@@ -45,3 +45,14 @@ body {
   header {
     position: relative; /* Pour que le bouton se positionne par rapport au header */
   }
+
+  .container {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .container iframe {
+    max-width: 100%;
+  }
