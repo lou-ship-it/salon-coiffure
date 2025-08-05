@@ -1,0 +1,5 @@
+body { font-family: Arial; margin: 20px; }
+header { display: flex; justify-content: space-between; }
+.profile-menu { position: relative; }
+.dropdown { display: none; position: absolute; top: 100%; }
+.profile-menu:hover .dropdown { display: block; }
