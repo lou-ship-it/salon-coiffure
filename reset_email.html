@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Réinitialisation - Email</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f0f0f0; }
+    form { max-width: 400px; margin: 50px auto; background: white; padding: 30px; border-radius: 8px; }
+    input, button { width: 100%; padding: 12px; margin: 10px 0; border-radius: 4px;}
+    button { background-color: #196bdf; color: white; font-weight: bold; }
+    #message { text-align: center; margin-top: 10px; }
+    button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: all 0.2s ease;
+}
+  </style>
+</head>
+<body>
+  <form id="resetForm">
+    <h2>Mot de passe oublié</h2>
+    <input type="email" id="email" placeholder="Votre email" required />
+    <button type="submit">Envoyer le code</button>
+    <p id="message"></p>
+  </form>
+
+  <script>
+    document.getElementById("resetForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      localStorage.setItem("resetEmail", email); // pour les étapes suivantes
+
+      fetch("https://script.google.com/macros/s/AKfycbwWafEe2kOQPil3PqRF5BVCqk5TDNPAQtyh9DBzSlUovuKfjJm_dpNHLzCPFseU0Zb5/exec", {
+        method: "POST",
+        body: new URLSearchParams({
+          action: "reset_code_envoi",
+          email: email
+        })
+      })
+      .then(res => res.text())
+      .then(result => {
+        document.getElementById("message").textContent = result;
+        if (result.includes("Code envoyé")) {
+          setTimeout(() => window.location.href = "reset_code.html", 1000);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mon compte</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f0f0f0; }
+    form, .infos { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 8px; }
+    h2 { text-align: center; }
+    input, button { width: 100%; padding: 10px; margin: 8px 0; border-radius: 4px; }
+    button { background-color: #196bdf; color: white; border: none; font-weight: bold; }
+    ul { list-style: none; padding: 0; }
+    li { padding: 5px 0; border-bottom: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <div class="infos">
+    <h2>Mes informations</h2>
+    <form id="infoForm">
+      <input type="email" id="email" placeholder="Email" required readonly />
+      <input type="tel" id="telephone" placeholder="Numéro de téléphone" required />
+      <button type="submit">Enregistrer</button>
+      <p id="message"></p>
+    </form>
+    <h3>Mes rendez-vous</h3>
+    <ul id="listeRdv"></ul>
+  </div>
+
+  <script>
+    const email = localStorage.getItem("resetEmail");
+    document.getElementById("email").value = email;
+
+    fetch("https://script.google.com/macros/s/AKfycbwWafEe2kOQPil3PqRF5BVCqk5TDNPAQtyh9DBzSlUovuKfjJm_dpNHLzCPFseU0Zb5/exec", {
+      method: "POST",
+      body: new URLSearchParams({
+        action: "get_infos",
+        email: email
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("telephone").value = data.telephone || "";
+      const ul = document.getElementById("listeRdv");
+      (data.rdv || []).forEach(r => {
+        const li = document.createElement("li");
+        li.textContent = r;
+        ul.appendChild(li);
+      });
+    });
+
+    document.getElementById("infoForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const tel = document.getElementById("telephone").value.trim();
+      fetch("https://script.google.com/macros/s/AKfycbwWafEe2kOQPil3PqRF5BVCqk5TDNPAQtyh9DBzSlUovuKfjJm_dpNHLzCPFseU0Zb5/exec", {
+        method: "POST",
+        body: new URLSearchParams({
+          action: "update_infos",
+          email: email,
+          telephone: tel
+        })
+      })
+      .then(res => res.text())
+      .then(msg => document.getElementById("message").textContent = msg);
+    });
+  </script>
+</body>
+</html>
+
+

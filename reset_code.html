@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vérifier le code</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 30px;
+    }
+    form {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    input, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #196bdf;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #155fbf;
+    }
+  </style>
+</head>
+<body>
+  <form id="codeForm">
+    <h2>Vérification du code</h2>
+    <input type="text" id="code" placeholder="Code à 6 chiffres" required />
+    <button type="submit">Valider</button>
+    <p id="message"></p>
+  </form>
+
+  <script>
+    const email = localStorage.getItem("resetEmail");
+
+    document.getElementById("codeForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const code = document.getElementById("code").value.trim();
+
+      fetch("https://script.google.com/macros/s/AKfycbwWafEe2kOQPil3PqRF5BVCqk5TDNPAQtyh9DBzSlUovuKfjJm_dpNHLzCPFseU0Zb5/exec", {
+        method: "POST",
+        body: new URLSearchParams({
+          action: "verifier_code",
+          email: email,
+          code: code
+        })
+      })
+      .then(res => res.text())
+      .then(msg => {
+        if (msg.trim() === "OK") {
+          window.location.href = "reset_password.html";
+        } else {
+          document.getElementById("message").textContent = "Code incorrect.";
+        }
+      })
+      .catch(() => {
+        document.getElementById("message").textContent = "Erreur serveur.";
+      });
+    });
+  </script>
+</body>
+</html>

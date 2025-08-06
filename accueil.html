@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Salon Élégance - Présentation</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .account-wrapper {
+      position: absolute;
+      top: 20px;
+      right:  85px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+      z-index: 1000;
+    }
+    .user-icon {
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-top: -25px;
+}
+.user-menu {
+  position: relative; /* pour que le menu déroulant se place par rapport à l'icône */
+}
+
+#menu-deroulant {
+  display: none;
+  position: absolute;
+  top: 20px; /* espace entre l’icône et le menu */
+  left: 50%;
+  transform: translateX(-50%); /* centre parfaitement sous l’icône */
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  text-align: center;
+  min-width: 110px; /* largeur raisonnable */
+}
+
+#menu-deroulant a {
+  display: block;
+  padding: 5px;
+  text-decoration: none;
+  color: #196bdf;
+  font-weight: bold;
+  white-space: nowrap;
+  font-size: 11px; /* texte légèrement rapetissé */
+}
+
+#menu-deroulant a:hover {
+  background: #f0f0f0;
+}
+  </style>
+</head>
+<body>
+  <header>
+    <script>
+      // Vérifie si l'utilisateur est connecté
+      if (!localStorage.getItem("estConnecte")) {
+        window.location.href = "login.html"; // Redirige vers la page de connexion
+      }
+    </script>
+        <button class="logout-btn" onclick="deconnexion()">Se déconnecter</button>
+        <script>
+          function deconnexion() {
+            localStorage.removeItem("estConnecte");
+            window.location.href = "login.html";
+          }
+        </script>
+    <div class="account-wrapper">
+      <div class="user-menu">
+        <img src="https://img.icons8.com/ios-filled/24/user.png" class="user-icon" onclick="toggleMenu()" />
+        <div id="menu-deroulant">
+          <a href="compte.html">Mon compte</a>
+          <a href="changer_mot_de_passe.html">Changer de mot de passe</a>
+        </div>
+      </div>
+    </div>
+
+    <h1>Salon de Coiffure Élégance</h1>
+    <nav>
+      <a href="accueil.html">Accueil</a>
+      <a href="reservation.html">Réservation</a>
+      <a href="avis.html">Avis</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Bienvenue chez Élégance</h2>
+      <p>Notre salon vous accueille dans un cadre moderne et relaxant. Nos coiffeurs professionnels vous accompagnent pour sublimer votre style.</p>
+      <img src="https://via.placeholder.com/600x300" alt="Salon Élégance">
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Salon Élégance - Tous droits réservés</p>
+  </footer>
+
+  <script>
+    function deconnexion() {
+      localStorage.removeItem("estConnecte");
+      window.location.href = "login.html";
+    }
+
+    function toggleMenu() {
+      const menu = document.getElementById("menu-deroulant");
+      menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    }
+
+    document.addEventListener("click", function (e) {
+      const icon = document.querySelector(".user-icon");
+      const menu = document.getElementById("menu-deroulant");
+      if (!icon.contains(e.target) && !menu.contains(e.target)) {
+        menu.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
