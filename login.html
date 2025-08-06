@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Connexion</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f0f0f0;
+    }
+    form {
+      max-width: 400px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #196bdf;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #155fbf;
+      transform: scale(1.03);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: all 0.2s ease;
+    }
+    .inscription-text {
+      color: #888;
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    .inscription-btn {
+      width: 100%;
+      margin-top: 5px;
+      background-color: #196bdf;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .inscription-btn:hover {
+      background-color: #155fbf;
+    }
+  </style>
+</head>
+<body>
+  <form id="loginForm">
+    <h2 style="text-align:center;">Connexion</h2>
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="mot_de_passe" placeholder="Mot de passe" required />
+    <button type="submit">Se connecter</button>
+    <p id="message"></p>
+    <p style="text-align:center; margin-top:10px;">
+      <a href="reset_email.html" style="color:#196bdf; text-decoration:none;">Mot de passe oublié ?</a>
+    </p>
+    <p class="inscription-text">Vous n'avez pas de compte ?</p>
+    <a href="inscription.html"><button type="button" class="inscription-btn">S'inscrire</button></a>
+  </form>
+
+  <script>
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    const form = document.getElementById("loginForm");
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const motDePasse = document.getElementById("mot_de_passe").value.trim();
+      const hashed = await sha256(motDePasse);
+
+      fetch("https://script.google.com/macros/s/AKfycbwWafEe2kOQPil3PqRF5BVCqk5TDNPAQtyh9DBzSlUovuKfjJm_dpNHLzCPFseU0Zb5/exec", {
+        method: "POST",
+        body: new URLSearchParams({
+          action: "connexion",
+          email: email,
+          mot_de_passe: hashed
+        })
+      })
+      .then(response => response.text())
+      .then(result => {
+        if (result.trim() === "OK") {
+          localStorage.setItem("estConnecte", "true");
+          localStorage.setItem("resetEmail", email);
+          window.location.href = "index.html";
+        } else {
+          document.getElementById("message").textContent = "Identifiants incorrects.";
+        }
+      })
+      .catch(() => {
+        document.getElementById("message").textContent = "Une erreur est survenue.";
+      });
+    });
+  </script>
+</body>
+</html>
