@@ -1,34 +1,9 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #fefefe;
-  }
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #b4b3b3;
+}
   
-  header {
-    background-color: #196bdf;
-    color: white;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  nav a {
-    margin: 0 15px;
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  main {
-    padding: 20px;
-  }
-  
-  footer {
-    background-color: #222;
-    color: white;
-    text-align: center;
-    padding: 10px;
-  }
   .logout-btn {
     position: absolute;
     top: 20px;
@@ -45,7 +20,12 @@ body {
   header {
     position: relative; /* Pour que le bouton se positionne par rapport au header */
   }
-
+  nav a {
+    margin: 0 18px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
   .container {
     max-width: 850px;
     margin: 0 auto;

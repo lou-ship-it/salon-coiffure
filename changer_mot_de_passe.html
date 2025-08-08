@@ -8,6 +8,20 @@
     form { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 8px; }
     input, button { width: 100%; padding: 10px; margin: 8px 0; border-radius: 4px; }
     button { background-color: #196bdf; color: white; border: none; font-weight: bold; }
+
+@keyframes blink {
+  0%   { opacity: 0.2; }
+  20%  { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+#loading-dots .dot {
+  animation: blink 1.4s infinite;
+}
+#loading-dots .dot:nth-child(1) { animation-delay: 0s; }
+#loading-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+#loading-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+
+
   </style>
 </head>
 <body>
@@ -18,6 +32,7 @@
     <input type="password" id="nouveau2" placeholder="Confirmer le mot de passe" required />
     <button type="submit">Valider</button>
     <p id="message"></p>
+    <div id="loading-dots" style="display:none; text-align:center; font-size: 18px; color: #555;"><span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></div> 
   </form>
 
   <script>
@@ -34,7 +49,11 @@
       const nouveau1 = document.getElementById("nouveau1").value.trim();
       const nouveau2 = document.getElementById("nouveau2").value.trim();
 
+      document.getElementById("loading-dots").style.display = "block"; //
+      document.getElementById("message").textContent = ""; //
+
       if (nouveau1 !== nouveau2) {
+        document.getElementById("loading-dots").style.display = "none";
         document.getElementById("message").textContent = "Les nouveaux mots de passe ne correspondent pas.";
         return;
       }
@@ -52,6 +71,7 @@
       })
       .then(res => res.text())
       .then(msg => {
+        document.getElementById("loading-dots").style.display = "none";
         document.getElementById("message").textContent = msg;
         if (msg.includes("modifié")) setTimeout(() => window.location.href = "login.html", 2000);
       });

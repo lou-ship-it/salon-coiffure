@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
+  
     <style>
       .account-wrapper {
         position: absolute;
@@ -58,13 +58,7 @@
     background: #f0f0f0;
   }
     </style>
-  
-    <script>
-      // Vérifie si l'utilisateur est connecté
-      if (!localStorage.getItem("estConnecte")) {
-        window.location.href = "login.html"; // Redirige vers la page de connexion
-      }
-    </script>
+
         <button class="logout-btn" onclick="deconnexion()">Se déconnecter</button>
         <script>
           function deconnexion() {
@@ -85,33 +79,85 @@
     });
         </script>
 
-<div class="account-wrapper">
-  <div class="user-menu">
-    <img src="https://img.icons8.com/ios-filled/24/user.png" class="user-icon" onclick="toggleMenu()" />
-    <div id="menu-deroulant">
-      <a href="compte.html">Mon compte</a>
-      <a href="changer_mot_de_passe.html">Changer de mot de passe</a>
-    </div>
-  </div>
-</div>
-    <h1>Les avis de nos clients</h1>
-    <nav>
-      <a href="accueil.html">Accueil</a>
-      <a href="reservation.html">Réservation</a>
-      <a href="avis.html">Avis</a>
-    </nav>
-  </header>
-  <main>
-    <h2>Ce que pensent nos clients</h2>
 
-    <iframe src="https://www.google.com/maps/embed?pb=!4v...TON_URL_COMPLET!" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+<header>
+  <script>
+   // Vérifie si l'utilisateur est connecté
+   if (!localStorage.getItem("estConnecte")) {
+     window.location.href = "login.html"; // Redirige vers la page de connexion
+   }
+  </script>
+     <button class="logout-btn" onclick="deconnexion()">Se déconnecter</button>
+     <script>
+       function deconnexion() {
+         localStorage.removeItem("estConnecte");
+         window.location.href = "login.html";
+       }
+     </script>
+ <div class="account-wrapper">
+   <div class="user-menu">
+     <img src="https://img.icons8.com/ios-filled/24/user.png" class="user-icon" onclick="toggleMenu()" />
+     <div id="menu-deroulant">
+       <a href="compte.html">Mon compte</a>
+       <a href="changer_mot_de_passe.html">Changer de mot de passe</a>
+     </div>
+   </div>
+ </div>
+ </header>
+ <main class="home">
+   <section class="hero" style="background-image: url('accueil-hero.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center; padding: 15em 1em; text-align: center; color: white;">
+     <nav>
+       <a href="index.html">Accueil</a>
+       <a href="reservation.html">Réservations</a>
+       <a href="avis.html">Avis</a>
+     </nav>
+     <h2 style="font-size: 3em; margin-bottom: 0.5em;">SALON ÉLÉGANCE</h2>
+     <p style="font-size: 1.5em; margin-bottom: 1em;">Élégance et style pour vos cheveux</p>
+     <a href="reservation.html" style="padding: 1em 2em; background-color: #196bdf; color: white; border-radius: 30px; text-decoration: none; font-weight: bold;">PRENDRE RENDEZ-VOUS</a>
+   </section>
 
-    <p><a href="https://www.google.com/search?q=Salon+Élégance&ludocid=TON_ID_DE_FICHE" target="_blank">
-      Lire tous les avis sur Google</a></p>
+   <main style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 2em;">
+    <h2 style="margin-bottom: 1em;">Ce que pensent nos clients</h2>
+  
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!4v...TON_URL_COMPLET!" 
+      width="600" 
+      height="450" 
+      style="border:0; max-width: 100%; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" 
+      allowfullscreen="" 
+      loading="lazy">
+    </iframe>
+  
+    <p style="margin-top: 1.5em;">
+      <a id="avis-google" 
+         href="https://www.google.com/search?sca_esv=0e0f0e34ec054157&rlz=1C5CHFA_enFR1095FR1101&tbm=lcl&sxsrf=AE3TifMMTGGNOmEjiqiIjEpmcwBq5CpRIg:1754683304284&q=Touche+Finale+Avis&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxI2NDEwsDQ3MzYwMjExtDSxMDY32sDI-IpRKCS_NDkjVcEtMy8xJ1XBsSyzeBErFkEAjoCzGkQAAAA&rldimm=1400976302441948372&hl=fr-FR&sa=X&ved=2ahUKEwjN_63YgPyOAxVldqQEHQVIPGAQ9fQKegQIWhAF&biw=1900&bih=913&dpr=1#lkt=LocalPoiReviews" target="_blank" 
+         target="_blank" 
+         style="color: #196bdf; font-weight: bold; text-decoration: none; display: inline-block; transition: transform 0.3s ease, opacity 0.3s ease;">
+        Lire tous nos avis
+      </a>
+    </p>
+    <style>
+      #avis-google:hover {
+        color: black;
+      }
+    </style>
+    <script>
+      const lienAvis = document.getElementById("avis-google");
+      lienAvis.addEventListener("mousedown", () => {
+        lienAvis.style.transform = "scale(0.9)";
+        lienAvis.style.opacity = "0.7";
+      });
+      lienAvis.addEventListener("mouseup", () => {
+        lienAvis.style.transform = "scale(1)";
+        lienAvis.style.opacity = "1";
+      });
+    </script>
   </main>
-
-  <footer>
-    <p>© 2025 Salon Élégance</p>
+  <footer style="text-align: center; background-color: #196bdf; color: white; padding: 1em;">
+    <p>&copy; 2025 Salon Élégance. Tous droits réservés.</p>
   </footer>
 </body>
 </html>
+
+
+

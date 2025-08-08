@@ -4,6 +4,18 @@
   <meta charset="UTF-8">
   <title>Inscription</title>
   <style>
+@keyframes blink {
+  0%   { opacity: 0.2; }
+  20%  { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+#loading-dots .dot {
+  animation: blink 1.4s infinite;
+}
+#loading-dots .dot:nth-child(1) { animation-delay: 0s; }
+#loading-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+#loading-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
@@ -53,8 +65,14 @@
     <input type="password" id="mot_de_passe" placeholder="Mot de passe" required />
     <input type="tel" id="telephone" placeholder="Téléphone" required />
     <button type="submit">S'inscrire</button>
-    <p id="confirmation"></p>
+    <p id="message"></p>
+    <div id="loading-dots" style="display:none; text-align:center; font-size: 18px; color: #555;">
+      <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
+    </div>
+    
+    <p id="confirmation"></p>   
     <p id="erreur"></p>
+    
   </form>
 
   <script>
@@ -74,6 +92,9 @@
       const telephone = document.getElementById("telephone").value.trim();
       const hashed = await sha256(motDePasse);
 
+      document.getElementById("loading-dots").style.display = "block";
+      document.getElementById("message").textContent = "";
+
       fetch("https://script.google.com/macros/s/AKfycbwWafEe2kOQPil3PqRF5BVCqk5TDNPAQtyh9DBzSlUovuKfjJm_dpNHLzCPFseU0Zb5/exec", {
         method: "POST",
         body: new URLSearchParams({
@@ -85,6 +106,8 @@
       })
       .then(res => res.text())
       .then(result => {
+        console.log("Réponse reçue :", result);
+        document.getElementById("loading-dots").style.display = "none";
         if (result.includes("réussie")) {
           document.getElementById("confirmation").textContent = result;
           document.getElementById("erreur").textContent = "";
@@ -98,6 +121,8 @@
         }
       })
       .catch(err => {
+        console.error("Erreur :", err); 
+        document.getElementById("loading-dots").style.display = "none";
         document.getElementById("erreur").textContent = "❌ Une erreur est survenue.";
         document.getElementById("confirmation").textContent = "";
       });

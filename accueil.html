@@ -2,7 +2,8 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Salon Élégance - Présentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L'Art du Style</title>
   <link rel="stylesheet" href="style.css">
   <style>
     .account-wrapper {
@@ -35,7 +36,7 @@
   background: white;
   border: 1px solid #ccc;
   border-radius: 6px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(154, 152, 152, 0.873);
   padding: 5px;
   text-align: center;
   min-width: 110px; /* largeur raisonnable */
@@ -58,12 +59,12 @@
 </head>
 <body>
   <header>
-    <script>
+     <script>
       // Vérifie si l'utilisateur est connecté
       if (!localStorage.getItem("estConnecte")) {
         window.location.href = "login.html"; // Redirige vers la page de connexion
       }
-    </script>
+     </script>
         <button class="logout-btn" onclick="deconnexion()">Se déconnecter</button>
         <script>
           function deconnexion() {
@@ -80,27 +81,40 @@
         </div>
       </div>
     </div>
-
-    <h1>Salon de Coiffure Élégance</h1>
-    <nav>
-      <a href="accueil.html">Accueil</a>
-      <a href="reservation.html">Réservation</a>
-      <a href="avis.html">Avis</a>
-    </nav>
-  </header>
-
-  <main>
-    <section>
-      <h2>Bienvenue chez Élégance</h2>
-      <p>Notre salon vous accueille dans un cadre moderne et relaxant. Nos coiffeurs professionnels vous accompagnent pour sublimer votre style.</p>
-      <img src="https://via.placeholder.com/600x300" alt="Salon Élégance">
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2025 Salon Élégance - Tous droits réservés</p>
-  </footer>
-
+    </header>
+    <main class="home">
+      <section class="hero" style="background-image: url('accueil-hero.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center; padding: 15em 1em; text-align: center; color: white;">
+        <nav>
+          <a href="index.html">Accueil</a>
+          <a href="reservation.html">Réservations</a>
+          <a href="avis.html">Avis</a>
+        </nav>
+        <h2 style="font-size: 3em; margin-bottom: 0.5em;">SALON ÉLÉGANCE</h2>
+        <p style="font-size: 1.5em; margin-bottom: 1em;">Élégance et style pour vos cheveux</p>
+        <a href="reservation.html" style="padding: 1em 2em; background-color: #196bdf; color: white; border-radius: 30px; text-decoration: none; font-weight: bold;">PRENDRE RENDEZ-VOUS</a>
+      </section>
+  
+      <section class="presentation" style="display: flex; flex-wrap: wrap; gap: 2em; padding: 3em 2em; background-color: #b4b3b3;">
+        <div style="flex: 1; min-width: 280px;">
+          <img src="salon-team.jpg" alt="Styliste à l'œuvre" style="width: 100%; border-radius: 10px;">
+        </div>
+        <div style="flex: 1; min-width: 280px; display: flex; flex-direction: column; justify-content: center;">
+          <h2 style="color: #3825b8;">Bienvenue au Salon Élégance</h2>
+          <p style="font-size: 1.1em; line-height: 1.6;">
+            Découvrez un havre de sophistication et de style chez Salon Élégance. Nos experts stylistes coiffent avec passion et précision pour sublimer votre beauté naturelle.
+          </p>
+        </div>
+      </section>
+  
+      <section class="galerie" style="display: flex; gap: 4em; flex-wrap: wrap; justify-content: center; padding: 2em; background-color: #b4b3b3;">
+        <img src="galerie1.jpg" alt="Styliste 1" style="width: 250px;  border-radius: 20px;">
+        <img src="galerie2.jpg" alt="Client heureux" style="width: 250px;  border-radius: 20px;">
+        <img src="galerie3.jpg" alt="Deux femmes souriantes" style="width: 250px; border-radius: 20px;">
+      </section>
+    </main>
+    <footer style="text-align: center; background-color: #196bdf; color: white; padding: 1em;">
+      <p>&copy; 2025 Salon Élégance. Tous droits réservés.</p>
+    </footer>
   <script>
     function deconnexion() {
       localStorage.removeItem("estConnecte");

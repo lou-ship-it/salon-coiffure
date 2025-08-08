@@ -5,6 +5,18 @@
   <title>Salon Élégance - Présentation</title>
   <link rel="stylesheet" href="style.css">
   <style>
+    @keyframes blink {
+  0%   { opacity: 0.2; }
+  20%  { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+#loading-dots .dot {
+  animation: blink 1.4s infinite;
+}
+#loading-dots .dot:nth-child(1) { animation-delay: 0s; }
+#loading-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+#loading-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+
     .account-wrapper {
       position: absolute;
       top: 20px;
@@ -54,32 +66,24 @@
 #menu-deroulant a:hover {
   background: #f0f0f0;
 }
+
   </style>
 </head>
 <body>
-<script>
-  // Vérifie si l'utilisateur est connecté
-  if (!localStorage.getItem("estConnecte")) {
-    window.location.href = "login.html"; // Redirige vers la page de connexion
-  }
-</script>
-  <header>
-    <button class="logout-btn" onclick="deconnexion()">Se déconnecter</button>
-    <div class="account-wrapper">
-      <div class="user-menu">
-        <img src="https://img.icons8.com/ios-filled/24/user.png" class="user-icon" onclick="toggleMenu()" />
-        <div id="menu-deroulant">
-          <a href="compte.html">Mon compte</a>
-          <a href="changer_mot_de_passe.html">Changer de mot de passe</a>
-        </div>
-      </div>
-    </div>
-    <script>
-      function deconnexion() {
-        localStorage.removeItem("estConnecte");
-        window.location.href = "login.html";
-      }
-      function toggleMenu() {
+<header>
+  <script>
+   // Vérifie si l'utilisateur est connecté
+   if (!localStorage.getItem("estConnecte")) {
+     window.location.href = "login.html"; // Redirige vers la page de connexion
+   }
+  </script>
+     <button class="logout-btn" onclick="deconnexion()">Se déconnecter</button>
+     <script>
+       function deconnexion() {
+         localStorage.removeItem("estConnecte");
+         window.location.href = "login.html";
+       }
+       function toggleMenu() {
       const menu = document.getElementById("menu-deroulant");
       menu.style.display = (menu.style.display === "block") ? "none" : "block";
     }
@@ -91,14 +95,27 @@
         menu.style.display = "none";
       }
     });
-    </script>
-    <h1>Salon de Coiffure Élégance</h1>
-    <nav>
-      <a href="accueil.html">Accueil</a>
-      <a href="reservation.html">Réservation</a>
-      <a href="avis.html">Avis</a>
-    </nav>
-  </header>
+     </script>
+ <div class="account-wrapper">
+  <div class="user-menu">
+    <img src="https://img.icons8.com/ios-filled/24/user.png" class="user-icon" onclick="toggleMenu()" />
+    <div id="menu-deroulant">
+      <a href="compte.html">Mon compte</a>
+      <a href="changer_mot_de_passe.html">Changer de mot de passe</a>
+    </div>
+  </div>
+</div>
+ </header>
+ <main class="home">
+   <section class="hero" style="background-image: url('accueil-hero.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center; padding: 15em 1em; text-align: center; color: white;">
+     <nav>
+       <a href="index.html">Accueil</a>
+       <a href="reservation.html">Réservations</a>
+       <a href="avis.html">Avis</a>
+     </nav>
+     <h2 style="font-size: 3em; margin-bottom: 0.5em;">SALON ÉLÉGANCE</h2>
+     <p style="font-size: 1.5em; margin-bottom: 1em;">Élégance et style pour vos cheveux</p>
+   </section>
 <body>
 <div class="container">
   <h1>Planning de réservation</h1>
@@ -124,29 +141,67 @@
 
     <button type="submit">Réserver</button>
   </form>
-
+  <p id="message"></p>
+  <div id="loading-dots" style="display:none; text-align:center; font-size: 18px; color: #555;"><span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></div> 
   <p id="confirmation"></p>
 
   <script>
     document.getElementById("reservation-form").addEventListener("submit", function (e) {
       e.preventDefault();
       const formData = new FormData(this);
+      document.getElementById("loading-dots").style.display = "block"; //
+      document.getElementById("message").textContent = ""; //
+
       fetch("https://script.google.com/macros/s/AKfycbzbUTH2VE_TIQOwH3w6yLlfjU-9Q02zfJlfWdCchQadK6iJYVq1XRL-nMd_B4y88JIH/exec", {
         method: "POST",
         body: formData
       })
       .then(res => res.text())
       .then(data => {
+        document.getElementById("loading-dots").style.display = "none"; //
+
         document.getElementById("confirmation").innerText = data;
       })
       .catch(err => {
+        document.getElementById("loading-dots").style.display = "none";//
         document.getElementById("confirmation").innerText = "❌ Une erreur est survenue.";
       });
     });
   </script>
+
+<script>
+  document.getElementById("reservation-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+
+  // On ajoute l'email stocké lors de la connexion
+  formData.append("email", localStorage.getItem("resetEmail"));
+
+  document.getElementById("loading-dots").style.display = "block";
+  document.getElementById("message").textContent = "";
+
+  fetch("https://script.google.com/macros/s/AKfycbxaLcPK4fh-wqULuJpq6CMR4yxr8tkbx-j3tUeXw_RtJNYCqOr9C7otcQ0xcupB7Vov/exec", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("loading-dots").style.display = "none";
+    document.getElementById("confirmation").innerText = data;
+  })
+  .catch(err => {
+    document.getElementById("loading-dots").style.display = "none";
+    document.getElementById("confirmation").innerText = "❌ Une erreur est survenue.";
+  });
+});
+
+  </script>
+  
+
+
 </div>
-<footer>
-  <p>© 2025 Salon Élégance - Tous droits réservés</p>
+<footer style="text-align: center; background-color: #196bdf; color: white; padding: 1em;">
+  <p>&copy; 2025 Salon Élégance. Tous droits réservés.</p>
 </footer>
 </body>
 </html>
